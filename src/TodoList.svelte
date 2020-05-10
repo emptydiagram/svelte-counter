@@ -48,15 +48,15 @@
 <ul>
   {#each items as item, i}
     <li>
-      <input type="checkbox" checked={item.completed} on:input={() => toggleCompletion(i)} />
+      <input type="checkbox" checked={item.completed} on:input={() => toggleCompletion(i)} data-testid="completion-toggle" />
       {#if editingItem !== i}
         <span class={item.completed ? 'completed' : ''} data-testid="todo-item" on:dblclick={() => editItem(i)}>
           {item.text}
         </span>
       {:else}
-        <input type="text" placeholder="Item text" bind:value={editingItemText} />
-        <button on:click={saveEdit}>Save</button>
-        <button on:click={cancelEdit}>Cancel</button>
+        <input type="text" placeholder="Item text" bind:value={editingItemText} data-testid="edit-todo-item" />
+        <button on:click={saveEdit} data-testid="save-item-edit">Save</button>
+        <button on:click={cancelEdit} data-testid="cancel-item-edit">Cancel</button>
       {/if}
     </li>
   {/each}
