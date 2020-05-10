@@ -16,7 +16,6 @@ it('adding an item works', async () => {
   expect(items[0].textContent).toBe('wash the lawn');
   expect(items[1].textContent).toBe('dance');
 
-  // firing keydown/keyup not working, so set it manually
   await fireEvent.input(newEntryInput, { target: { value: 'aBc' } });
   expect(newEntryInput.value).toBe('aBc');
 

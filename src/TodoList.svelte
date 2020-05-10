@@ -50,12 +50,8 @@
     <li>
       <input type="checkbox" checked={item.completed} on:input={() => toggleCompletion(i)} />
       {#if editingItem !== i}
-        <span data-testid="todo-item" on:dblclick={() => editItem(i)}>
-          {#if item.completed}
-            <strike>{item.text}</strike>
-          {:else}
-            {item.text}
-          {/if}
+        <span class={item.completed ? 'completed' : ''} data-testid="todo-item" on:dblclick={() => editItem(i)}>
+          {item.text}
         </span>
       {:else}
         <input type="text" placeholder="Item text" bind:value={editingItemText} />
@@ -77,5 +73,9 @@ ul {
 li {
   border-bottom: 1px solid green;
   padding: 0.5em;
+}
+
+span.completed {
+  text-decoration: line-through;
 }
 </style>
