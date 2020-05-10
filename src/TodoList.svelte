@@ -1,25 +1,26 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 
-  export let items;
+  let items = [
+    { text: 'wash the lawn', completed: false },
+    { text: 'dance', completed: false }
+  ];
 
 	const dispatch = createEventDispatcher();
 
-  let newItemText;
+  let newItemText = '';
   let editingItem = null;
   let editingItemText;
 
-  function triggerSubmit() {
-    dispatch('createItem', {
-      item: newItemText
-    });
+  function triggerSubmit(event) {
+    items = [...items,
+      {text: newItemText, completed: false}
+    ];
     newItemText = '';
   }
 
   function toggleCompletion(i) {
-    dispatch('toggleItem', {
-      index: i
-    });
+    items[i].completed = !items[i].completed;
   }
 
   function editItem(i) {
@@ -29,10 +30,8 @@
 
   function saveEdit(event) {
     console.log('saveEdit, editingItem = ', editingItem, event);
-    dispatch('saveItem', {
-      index: editingItem,
-      text: editingItemText,
-    });
+    let i = editingItem;
+    items[i].text = editingItemText;
     editingItem = null;
   }
 
@@ -43,7 +42,7 @@
 
 <h1>Todo</h1>
 
-<input bind:value={newItemText} type="text" placeholder="What todo" />
+<input on:input={(e) => { newItemText = e.target.value; }} type="text" aria-label="new-todo-item" placeholder="What todo" value={newItemText} />
 <input on:click={triggerSubmit} type="submit" value="Submit" />
 
 <ul>
@@ -51,7 +50,7 @@
     <li>
       <input type="checkbox" checked={item.completed} on:input={() => toggleCompletion(i)} />
       {#if editingItem !== i}
-        <span on:dblclick={() => editItem(i)}>
+        <span data-testid="todo-item" on:dblclick={() => editItem(i)}>
           {#if item.completed}
             <strike>{item.text}</strike>
           {:else}
@@ -59,7 +58,7 @@
           {/if}
         </span>
       {:else}
-        <input type="text" bind:value={editingItemText} />
+        <input type="text" placeholder="Item text" bind:value={editingItemText} />
         <button on:click={saveEdit}>Save</button>
         <button on:click={cancelEdit}>Cancel</button>
       {/if}

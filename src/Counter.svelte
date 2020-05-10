@@ -11,7 +11,7 @@
 </script>
 
 <div>
-  <p>Clicked {count}</p>
+  <p>Count: {count}</p>
   <button on:click={handleIncClick}>Inc</button>
   <button on:click={handleDecClick}>Dec</button>
 </div>
