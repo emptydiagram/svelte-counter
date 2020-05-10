@@ -1,18 +1,14 @@
 <script>
+  import Counter from './Counter.svelte'
   import TodoList from './TodoList.svelte';
 
   export let name;
 
-  let count = 0;
   let items = [
     { text: 'one', completed: false },
     { text: '2', completed: false },
     { text: 'threeve', completed: false }
   ];
-
-  function handleClick() {
-      count += 1;
-  }
 
   function handleCreateItem(event) {
     items = [...items,
@@ -32,11 +28,8 @@
 </script>
 
 <main>
-  <div>
-    <h1>Hello {name}!</h1>
-    <p>Clicked {count}</p>
-    <button on:click={handleClick}>Inc</button>
-  </div>
+  <h1>Hello {name}!</h1>
+  <Counter />
   <TodoList
     on:createItem={handleCreateItem}
     on:toggleItem={handleToggleItem}
